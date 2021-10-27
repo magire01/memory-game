@@ -26,6 +26,8 @@ struct ContentView: View {
             
         } else {
             VStack {
+                Text ("Settings");
+                Spacer();
                 Button("Start Game", action:{
                     isStarted = true;
                 })
