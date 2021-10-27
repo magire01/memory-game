@@ -28,7 +28,6 @@ struct ContentView: View {
             VStack {
                 Button("Start Game", action:{
                     isStarted = true;
-                    print(isStarted);
                 })
                 .padding(20)
             }

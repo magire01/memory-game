@@ -13,6 +13,7 @@ struct GameView: View {
     @State var isCorrect = Bool();
     @State var qNumber = 0;
     @State var aNumber = 0;
+    @State var qDisplay = "blue";
     
     let nums = ["blue", "red", "purple"];
     
@@ -21,7 +22,7 @@ struct GameView: View {
     @State var answer = [Bool]();
     @State var selectedAnswer = String();
     
-    @State var timeRemaining = 4
+    @State var timeRemaining = 4;
     let timer = Timer.publish(every: 2, on: .main, in: .common).autoconnect()
     
     func resetGame() {
@@ -29,19 +30,23 @@ struct GameView: View {
         isCorrect = Bool();
         qNumber = 0;
         aNumber = 0;
-        timeRemaining = nums.count;
+        timeRemaining = 4
         answer = [Bool]();
         selectedAnswer = String();
     }
     
     func displayAnswerSelect() -> some View {
-        ForEach(nums, id: \.self) {num in
-            HStack {
+        HStack(spacing: 10) {
+            ForEach(nums, id: \.self) {num in
+            
                 Button(action: {
                     selectedAnswer = num;
                     if (selectedAnswer == question[aNumber]) {
                         answer.append(true)
                         aNumber = aNumber + 1;
+                        if (aNumber == question.count) {
+                            gameTurn = "win"
+                        }
                     } else {
                         answer.append(false)
                         gameTurn = "tryAgain"
@@ -51,37 +56,53 @@ struct GameView: View {
                        label: {
                     switch(num) {
                     case "red":
-                        Text("  ")
+                        Text("        ")
                             .background(Color.red)
+                            .padding(15)
+                            .font(.system(size: 30.0))
                     case "blue":
-                        Text("  ")
+                        Text("        ")
                             .background(Color.blue)
+                            .padding(15)
+                            .font(.system(size: 30.0))
                     default:
-                        Text("  ")
+                        Text("        ")
                             .background(Color.purple)
+                            .padding(15)
+                            .font(.system(size: 30.0))
                     }
                 })
             }
         }
     }
     
-    func displayQuestion() -> some View {
+    func displayTimer() -> some View {
         return Text("")
             .onReceive(timer) { _ in
                 if timeRemaining > 0 {
                     timeRemaining -= 1
                     qNumber = qNumber + 1
+                    qDisplay = question[qNumber];
+                    
                 } else {
                     gameTurn = "user";
                 }
             }
     }
     
+    
+    
     func displayTryAgain() -> some View {
         VStack {
             Button("Try Again", action: {
                 resetGame();
             })
+        }
+    }
+    
+    func displayWin() -> some View {
+        VStack {
+            Text("Completed")
         }
     }
     
@@ -94,11 +115,35 @@ struct GameView: View {
         case "tryAgain":
             displayTryAgain();
             Spacer();
+        case "win":
+            displayWin();
+            Spacer();
         default:
-            displayQuestion();
+            displayTimer();
             Spacer();
             VStack{
-                Text(question[qNumber]);
+                switch (qDisplay) {
+                case "red":
+                    Text("        ")
+                        .background(Color.red)
+                        .padding(15)
+                        .font(.system(size: 30.0))
+                case "blue":
+                    Text("        ")
+                        .background(Color.blue)
+                        .padding(15)
+                        .font(.system(size: 30.0))
+                case "purple":
+                    Text("        ")
+                        .background(Color.purple)
+                        .padding(15)
+                        .font(.system(size: 30.0))
+                default:
+                    Text("        ")
+                        .background(Color.white)
+                        .padding(15)
+                        .font(.system(size: 30.0))
+                }
             }
             Spacer();
             
