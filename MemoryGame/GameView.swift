@@ -13,8 +13,9 @@ struct GameView: View {
     @State var isCorrect = Bool();
     @State var qNumber = 0;
     @State var aNumber = 0;
-    @State var qDisplay = "blue";
+    @State var qDisplay = "black"
     @State var qSize = 100;
+    @State var showQDisplay = false;
 
     let nums = ["blue", "red", "purple"];
     
@@ -28,12 +29,14 @@ struct GameView: View {
     
     
     func setQuestion() {
-        for _ in 0...numberOfQuestions {
-            let randomNumber = Int.random(in: 0..<3)
+        for index in 0...numberOfQuestions {
+            var randomNumber = Int.random(in: 0..<3)
+            if(index > 0) {
+                while(questionArr[index - 1] == nums[randomNumber]) {
+                    randomNumber = Int.random(in: 0..<3)
+                }
+            }
             questionArr.append(nums[randomNumber])
-            
-            
-
         }
         print(questionArr)
         qDisplay = questionArr[0]
@@ -48,6 +51,7 @@ struct GameView: View {
         answer = [Bool]();
         selectedAnswer = String();
         questionArr = [String]();
+        qSize = 100;
     }
     
     func displayAnswerSelect() -> some View {
@@ -90,14 +94,71 @@ struct GameView: View {
         }
     }
     
+    func displayQuestion() -> some View {
+        return VStack{
+            switch (qDisplay) {
+            case "red":
+                Rectangle()
+                    .foregroundColor(Color.red)
+                    .padding(15)
+                    .frame(width: CGFloat(qSize), height: CGFloat(qSize))
+                    .onAppear {
+                        withAnimation {
+                            qSize += 50;
+                        }
+                    }
+                    .onDisappear {
+                        qSize = 100;
+                    }
+            case "blue":
+                Rectangle()
+                    .foregroundColor(Color.blue)
+                    .padding(15)
+                    .frame(width: CGFloat(qSize), height: CGFloat(qSize))
+                    .onAppear {
+                        withAnimation {
+                            qSize += 50;
+                        }
+                    }
+                    .onDisappear {
+                        qSize = 100;
+                    }
+            case "purple":
+                Rectangle()
+                    .foregroundColor(Color.purple)
+                    .padding(15)
+                    .frame(width: CGFloat(qSize), height: CGFloat(qSize))
+                    .onAppear {
+                        withAnimation {
+                            qSize += 50;
+                        }
+                    }
+                    .onDisappear {
+                        qSize = 100;
+                    }
+            default:
+                Rectangle()
+                    .background(Color.black)
+                    .padding(15)
+                    .frame(width: CGFloat(qSize), height: CGFloat(qSize))
+                    .onAppear {
+                        withAnimation {
+                            qSize += 50;
+                        }
+                    }
+                    .onDisappear {
+                        qSize = 100;
+                    }
+            }
+        }
+    }
+    
     func displayTimer() -> some View {
         return Text("")
             .onAppear {
                 setQuestion();
-                
             }
             .onReceive(timer) { _ in
-                qSize = 100
                 if timeRemaining > 0 {
                     timeRemaining -= 1
                     qNumber = qNumber + 1
@@ -138,48 +199,8 @@ struct GameView: View {
             Spacer();
         default:
             displayTimer();
+            displayQuestion();
             Spacer();
-            VStack{
-                switch (qDisplay) {
-                case "red":
-                    Rectangle()
-                        .foregroundColor(Color.red)
-                        .padding(15)
-                        .frame(width: CGFloat(qSize), height: CGFloat(qSize))
-                        .onAppear {
-                            withAnimation {
-                                qSize += 50;
-                                
-                            }
-                        }
-                        
-                case "blue":
-                    Rectangle()
-                        .foregroundColor(Color.blue)
-                        .padding(15)
-                        .frame(width: CGFloat(qSize), height: CGFloat(qSize))
-                        .onAppear {
-                            withAnimation {
-                                qSize += 50;
-                            }
-                        }
-                case "purple":
-                    Rectangle()
-                        .foregroundColor(Color.purple)
-                        .padding(15)
-                        .frame(width: CGFloat(qSize), height: CGFloat(qSize))
-                        .onAppear {
-                            withAnimation {
-                                qSize += 50;
-                            }
-                        }
-                default:
-                    Text("        ")
-                        .background(Color.white)
-                        .padding(15)
-                        .font(.system(size: 30.0))
-                }
-            }
             Spacer();
             
         }
