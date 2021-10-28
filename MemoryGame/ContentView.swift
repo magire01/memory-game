@@ -12,7 +12,13 @@ struct ContentView: View {
     
     var body: some View {
         Text("Memory Game")
+            
         .padding(50)
+        .border(Color.white)
+        .padding(10)
+        .background(Color(red: 0, green: 0.5, blue: 1))
+        .foregroundColor(Color.white)
+        .font(.system(size: 30.0))
         Spacer();
         if(isStarted) {
             GameView();
@@ -22,16 +28,19 @@ struct ContentView: View {
                     isStarted = false;
                 })
                 .padding(20)
+                .foregroundColor(Color.red)
             }
             
         } else {
             VStack {
-                Text ("Settings");
                 Spacer();
                 Button("Start Game", action:{
                     isStarted = true;
                 })
                 .padding(20)
+                .background(Color(red: 0, green: 0, blue: 0.5))
+                .foregroundColor(Color.white)
+                .clipShape(Capsule())
             }
             Spacer();
         }

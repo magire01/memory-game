@@ -14,7 +14,7 @@ struct GameView: View {
     @State var qNumber = 0;
     @State var aNumber = 0;
     @State var qDisplay = "black"
-    @State var qSize = 100;
+    @State var qSize = 120;
     @State var showQDisplay = false;
 
     let nums = ["blue", "red", "purple"];
@@ -23,9 +23,9 @@ struct GameView: View {
     
     @State var answer = [Bool]();
     @State var selectedAnswer = String();
-    let numberOfQuestions = 4;
-    @State var timeRemaining = 4;
-    let timer = Timer.publish(every: 2, on: .main, in: .common).autoconnect()
+    @State var numberOfQuestions = 2;
+    @State var timeRemaining = 2;
+    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
     
     func setQuestion() {
@@ -47,11 +47,26 @@ struct GameView: View {
         isCorrect = Bool();
         qNumber = 0;
         aNumber = 0;
-        timeRemaining = 4
+        timeRemaining = 2
+        numberOfQuestions = 2
+        answer = [Bool]();
+        selectedAnswer = String();
+        questionArr = [String]();
+        qSize = 120;
+    }
+    
+    func nextLevel() {
+        timeRemaining = numberOfQuestions + 1;
+        numberOfQuestions = numberOfQuestions + 1;
+        gameTurn = "computer";
+        isCorrect = Bool();
+        qNumber = 0;
+        aNumber = 0;
         answer = [Bool]();
         selectedAnswer = String();
         questionArr = [String]();
         qSize = 100;
+        print("Level \(numberOfQuestions)")
     }
     
     func displayAnswerSelect() -> some View {
@@ -69,7 +84,6 @@ struct GameView: View {
                         answer.append(false)
                         gameTurn = "tryAgain"
                     }
-                    print(answer);
                 },
                        label: {
                     switch(num) {
@@ -101,53 +115,53 @@ struct GameView: View {
                 Rectangle()
                     .foregroundColor(Color.red)
                     .padding(15)
-                    .frame(width: CGFloat(qSize), height: CGFloat(qSize))
+                    .frame(width: CGFloat(qSize), height: CGFloat(120))
                     .onAppear {
                         withAnimation {
                             qSize += 50;
                         }
                     }
                     .onDisappear {
-                        qSize = 100;
+                        qSize = 120;
                     }
             case "blue":
                 Rectangle()
                     .foregroundColor(Color.blue)
                     .padding(15)
-                    .frame(width: CGFloat(qSize), height: CGFloat(qSize))
+                    .frame(width: CGFloat(qSize), height: CGFloat(120))
                     .onAppear {
                         withAnimation {
                             qSize += 50;
                         }
                     }
                     .onDisappear {
-                        qSize = 100;
+                        qSize = 120;
                     }
             case "purple":
                 Rectangle()
                     .foregroundColor(Color.purple)
                     .padding(15)
-                    .frame(width: CGFloat(qSize), height: CGFloat(qSize))
+                    .frame(width: CGFloat(qSize), height: CGFloat(120))
                     .onAppear {
                         withAnimation {
                             qSize += 50;
                         }
                     }
                     .onDisappear {
-                        qSize = 100;
+                        qSize = 120;
                     }
             default:
                 Rectangle()
-                    .background(Color.black)
+                    .background(Color.white)
                     .padding(15)
-                    .frame(width: CGFloat(qSize), height: CGFloat(qSize))
+                    .frame(width: CGFloat(qSize), height: CGFloat(120))
                     .onAppear {
                         withAnimation {
                             qSize += 50;
                         }
                     }
                     .onDisappear {
-                        qSize = 100;
+                        qSize = 120;
                     }
             }
         }
@@ -173,17 +187,31 @@ struct GameView: View {
     
     func displayTryAgain() -> some View {
         VStack {
-            Button("Try Again", action: {
+            Button("Start Over", action: {
                 resetGame();
             })
-        }
+                .background(Color(red: 0.8, green: 0, blue: 0))
+                .padding(10)
+                .foregroundColor(Color.white)
+                .font(.system(size: 20))
+        }.background(Color(red: 0.8, green: 0, blue: 0))
+            .frame(width: 150, height: 100)
     }
     
     func displayWin() -> some View {
         VStack {
-            Text("Completed")
+            Button("Continue", action: {
+                nextLevel();
+            })
+                .background(Color(red: 0, green: 0.5, blue: 0))
+                .padding(10)
+                .foregroundColor(Color.white)
+                .font(.system(size: 20))
         }
+        .background(Color(red: 0, green: 0.5, blue: 0))
+        .frame(width: 100, height: 100)
     }
+
     
     var body: some View {
         
@@ -203,6 +231,15 @@ struct GameView: View {
             Spacer();
             Spacer();
             
+        }
+        VStack {
+            Text("Level \(numberOfQuestions - 1)")
+                .padding(10)
+                .background(Color.white)
+                .foregroundColor(Color(red: 0, green: 0.5, blue: 1))
+                .font(.system(size: 30.0))
+                .border(Color(red: 0, green: 0.5, blue: 1))
+                
         }
     }
 }
