@@ -41,6 +41,7 @@ struct ContentView: View {
                 .background(Color(red: 0, green: 0, blue: 0.5))
                 .foregroundColor(Color.white)
                 .clipShape(Capsule())
+                Spacer();
             }
             Spacer();
         }

@@ -29,13 +29,23 @@ struct GameView: View {
     
     
     func setQuestion() {
-        for index in 0...numberOfQuestions {
-            var randomNumber = Int.random(in: 0..<3)
-            if(index > 0) {
-                while(questionArr[index - 1] == nums[randomNumber]) {
-                    randomNumber = Int.random(in: 0..<3)
+        if (numberOfQuestions == 2) {
+            for index in 0...numberOfQuestions {
+                var randomNumber = Int.random(in: 0..<3)
+                if(index > 0) {
+                    while(questionArr[index - 1] == nums[randomNumber]) {
+                        randomNumber = Int.random(in: 0..<3)
+                    }
                 }
+                questionArr.append(nums[randomNumber])
             }
+        } else {
+            var randomNumber = Int.random(in: 0..<3)
+            
+            while(questionArr[questionArr.count - 1] == nums[randomNumber]) {
+                randomNumber = Int.random(in: 0..<3)
+            }
+            
             questionArr.append(nums[randomNumber])
         }
         print(questionArr)
@@ -64,7 +74,6 @@ struct GameView: View {
         aNumber = 0;
         answer = [Bool]();
         selectedAnswer = String();
-        questionArr = [String]();
         qSize = 100;
         print("Level \(numberOfQuestions)")
     }
