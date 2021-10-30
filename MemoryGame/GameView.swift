@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct GameView: View {
-    
+    @Binding var difficulty: String
     @State var gameTurn = "computer";
     @State var isCorrect = Bool();
     @State var qNumber = 0;
@@ -18,6 +18,8 @@ struct GameView: View {
     @State var showQDisplay = false;
 
     let nums = ["blue", "red", "purple"];
+    let numsMedium = ["blue", "red", "purple", "yellow"];
+    let numsHard = ["blue", "red", "purple", "yellow", "green"];
     
     @State var questionArr = [String]()
     
@@ -180,6 +182,7 @@ struct GameView: View {
         return Text("")
             .onAppear {
                 setQuestion();
+                print(difficulty);
             }
             .onReceive(timer) { _ in
                 if timeRemaining > 0 {
@@ -246,15 +249,15 @@ struct GameView: View {
                 .padding(10)
                 .background(Color.white)
                 .foregroundColor(Color(red: 0, green: 0.5, blue: 1))
-                .font(.system(size: 30.0))
+                .font(.system(size: 20.0))
                 .border(Color(red: 0, green: 0.5, blue: 1))
                 
         }
     }
 }
 
-struct GameView_Previews: PreviewProvider {
-    static var previews: some View {
-        GameView()
-    }
-}
+//struct GameView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        GameView();
+//    }
+//}
