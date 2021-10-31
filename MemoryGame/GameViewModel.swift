@@ -8,15 +8,13 @@
 import Foundation
 
 class GameViewModel: ObservableObject {
-    struct GameDifficulty {
-        var computer: String
-        var user: String
-        var tryAgain: String
-        var win: String
-    }
-    @Published var UserTurn = (GameDifficulty(computer: "computer",
-                                              user: "user",
-                                              tryAgain: "tryAgain",
-                                              win: "win"));
+    @Published var TurnOptions = (computer: "computer",
+                              user: "user",
+                              tryAgain: "tryAgain",
+                              win: "win");
+    @Published var Turn = "computer"
+    @Published var QuestionNumber = 0;
+    @Published var AnswerNumber = 0;
+    @Published var SelectedAnswer = String();
     
 }

@@ -56,7 +56,7 @@ struct MediumView: View {
     }
     
     func resetGame() {
-        gameTurn = GameModel.UserTurn.computer;
+        gameTurn = GameModel.TurnOptions.computer;
         isCorrect = Bool();
         qNumber = 0;
         aNumber = 0;
@@ -71,7 +71,7 @@ struct MediumView: View {
     func nextLevel() {
         timeRemaining = numberOfQuestions + 1;
         numberOfQuestions = numberOfQuestions + 1;
-        gameTurn = GameModel.UserTurn.computer;
+        gameTurn = GameModel.TurnOptions.computer;
         isCorrect = Bool();
         qNumber = 0;
         aNumber = 0;
@@ -90,11 +90,11 @@ struct MediumView: View {
                         answer.append(true)
                         aNumber = aNumber + 1;
                         if (aNumber == questionArr.count) {
-                            gameTurn = GameModel.UserTurn.win
+                            gameTurn = GameModel.TurnOptions.win
                         }
                     } else {
                         answer.append(false)
-                        gameTurn = GameModel.UserTurn.tryAgain
+                        gameTurn = GameModel.TurnOptions.tryAgain
                     }
                 },
                        label: {
@@ -208,7 +208,7 @@ struct MediumView: View {
                     qNumber = qNumber + 1
                     qDisplay = questionArr[qNumber];
                 } else {
-                    gameTurn = GameModel.UserTurn.user;
+                    gameTurn = GameModel.TurnOptions.user;
                 }
             }
     }
@@ -246,13 +246,13 @@ struct MediumView: View {
     var body: some View {
         
         switch (gameTurn) {
-        case GameModel.UserTurn.user:
+        case GameModel.TurnOptions.user:
             displayAnswerSelect();
             Spacer();
-        case GameModel.UserTurn.tryAgain:
+        case GameModel.TurnOptions.tryAgain:
             displayTryAgain();
             Spacer();
-        case GameModel.UserTurn.win:
+        case GameModel.TurnOptions.win:
             displayWin();
             Spacer();
         default:
