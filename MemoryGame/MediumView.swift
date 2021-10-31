@@ -16,7 +16,8 @@ struct MediumView: View {
     @State var qSize = 120;
     @State var showQDisplay = false;
 
-    let nums = ["blue", "red", "purple", "yellow"];
+    //DifficultyViewModel
+    @ObservedObject var Difficulty = DifficultyViewModel();
     
     @State var questionArr = [String]()
     
@@ -32,20 +33,20 @@ struct MediumView: View {
             for index in 0...numberOfQuestions {
                 var randomNumber = Int.random(in: 0..<4)
                 if(index > 0) {
-                    while(questionArr[index - 1] == nums[randomNumber]) {
+                    while(questionArr[index - 1] == Difficulty.MediumMode.colorOptions[randomNumber]) {
                         randomNumber = Int.random(in: 0..<4)
                     }
                 }
-                questionArr.append(nums[randomNumber])
+                questionArr.append(Difficulty.MediumMode.colorOptions[randomNumber])
             }
         } else {
             var randomNumber = Int.random(in: 0..<4)
             
-            while(questionArr[questionArr.count - 1] == nums[randomNumber]) {
+            while(questionArr[questionArr.count - 1] == Difficulty.MediumMode.colorOptions[randomNumber]) {
                 randomNumber = Int.random(in: 0..<4)
             }
             
-            questionArr.append(nums[randomNumber])
+            questionArr.append(Difficulty.MediumMode.colorOptions[randomNumber])
         }
         print(questionArr)
         qDisplay = questionArr[0]
@@ -79,7 +80,7 @@ struct MediumView: View {
     
     func displayAnswerSelect() -> some View {
         HStack(spacing: 10) {
-            ForEach(nums, id: \.self) {num in
+            ForEach(Difficulty.MediumMode.colorOptions, id: \.self) {num in
                 Button(action: {
                     selectedAnswer = num;
                     if (selectedAnswer == questionArr[aNumber]) {

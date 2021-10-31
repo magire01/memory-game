@@ -15,8 +15,9 @@ struct HardView: View {
     @State var qDisplay = "black"
     @State var qSize = 120;
     @State var showQDisplay = false;
-
-    let nums = ["blue", "red", "purple", "yellow", "green"];
+    
+    //DifficultyViewModel
+    @ObservedObject var Difficulty = DifficultyViewModel();
     
     @State var questionArr = [String]()
     
@@ -32,20 +33,20 @@ struct HardView: View {
             for index in 0...numberOfQuestions {
                 var randomNumber = Int.random(in: 0..<5)
                 if(index > 0) {
-                    while(questionArr[index - 1] == nums[randomNumber]) {
+                    while(questionArr[index - 1] == Difficulty.HardMode.colorOptions[randomNumber]) {
                         randomNumber = Int.random(in: 0..<5)
                     }
                 }
-                questionArr.append(nums[randomNumber])
+                questionArr.append(Difficulty.HardMode.colorOptions[randomNumber])
             }
         } else {
             var randomNumber = Int.random(in: 0..<5)
             
-            while(questionArr[questionArr.count - 1] == nums[randomNumber]) {
+            while(questionArr[questionArr.count - 1] == Difficulty.HardMode.colorOptions[randomNumber]) {
                 randomNumber = Int.random(in: 0..<5)
             }
             
-            questionArr.append(nums[randomNumber])
+            questionArr.append(Difficulty.HardMode.colorOptions[randomNumber])
         }
         print(questionArr)
         qDisplay = questionArr[0]
@@ -80,7 +81,7 @@ struct HardView: View {
     func displayAnswerSelect() -> some View {
         VStack {
             HStack(spacing: 10) {
-                ForEach(nums[0...2], id: \.self) {num in
+                ForEach(Difficulty.HardMode.colorOptions[0...2], id: \.self) {num in
                     Button(action: {
                         selectedAnswer = num;
                         if (selectedAnswer == questionArr[aNumber]) {
@@ -117,7 +118,7 @@ struct HardView: View {
             }
             
             HStack(spacing: 10) {
-                ForEach(nums[3...4], id: \.self) {num in
+                ForEach(Difficulty.HardMode.colorOptions[3...4], id: \.self) {num in
                     Button(action: {
                         selectedAnswer = num;
                         if (selectedAnswer == questionArr[aNumber]) {
