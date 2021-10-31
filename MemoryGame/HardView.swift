@@ -1,13 +1,13 @@
 //
-//  GameView.swift
+//  HardView.swift
 //  MemoryGame
 //
-//  Created by Mark Gire on 10/26/21.
+//  Created by Mark Gire on 10/31/21.
 //
 
 import SwiftUI
 
-struct GameView: View {
+struct HardView: View {
     @State var gameTurn = "computer";
     @State var isCorrect = Bool();
     @State var qNumber = 0;
@@ -16,8 +16,7 @@ struct GameView: View {
     @State var qSize = 120;
     @State var showQDisplay = false;
 
-    let nums = ["blue", "red", "purple"];
-    let numsMedium = ["blue", "red", "purple", "yellow"];
+    let nums = ["blue", "red", "purple", "yellow", "green"];
     
     @State var questionArr = [String]()
     
@@ -31,19 +30,19 @@ struct GameView: View {
     func setQuestion() {
         if (numberOfQuestions == 2) {
             for index in 0...numberOfQuestions {
-                var randomNumber = Int.random(in: 0..<3)
+                var randomNumber = Int.random(in: 0..<5)
                 if(index > 0) {
                     while(questionArr[index - 1] == nums[randomNumber]) {
-                        randomNumber = Int.random(in: 0..<3)
+                        randomNumber = Int.random(in: 0..<5)
                     }
                 }
                 questionArr.append(nums[randomNumber])
             }
         } else {
-            var randomNumber = Int.random(in: 0..<3)
+            var randomNumber = Int.random(in: 0..<5)
             
             while(questionArr[questionArr.count - 1] == nums[randomNumber]) {
-                randomNumber = Int.random(in: 0..<3)
+                randomNumber = Int.random(in: 0..<5)
             }
             
             questionArr.append(nums[randomNumber])
@@ -79,42 +78,77 @@ struct GameView: View {
     }
     
     func displayAnswerSelect() -> some View {
-        HStack(spacing: 10) {
-            ForEach(nums, id: \.self) {num in
-                Button(action: {
-                    selectedAnswer = num;
-                    if (selectedAnswer == questionArr[aNumber]) {
-                        answer.append(true)
-                        aNumber = aNumber + 1;
-                        if (aNumber == questionArr.count) {
-                            gameTurn = "win"
+        VStack {
+            HStack(spacing: 10) {
+                ForEach(nums[0...2], id: \.self) {num in
+                    Button(action: {
+                        selectedAnswer = num;
+                        if (selectedAnswer == questionArr[aNumber]) {
+                            answer.append(true)
+                            aNumber = aNumber + 1;
+                            if (aNumber == questionArr.count) {
+                                gameTurn = "win"
+                            }
+                        } else {
+                            answer.append(false)
+                            gameTurn = "tryAgain"
                         }
-                    } else {
-                        answer.append(false)
-                        gameTurn = "tryAgain"
-                    }
-                },
-                       label: {
-                    switch(num) {
-                    case "red":
-                        Text("        ")
-                            .background(Color.red)
-                            .padding(15)
-                            .font(.system(size: 30.0))
-                    case "blue":
-                        Text("        ")
-                            .background(Color.blue)
-                            .padding(15)
-                            .font(.system(size: 30.0))
-                    default:
-                        Text("        ")
-                            .background(Color.purple)
-                            .padding(15)
-                            .font(.system(size: 30.0))
-                    }
-                })
+                    },
+                           label: {
+                        switch(num) {
+                        case "red":
+                            Text("        ")
+                                .background(Color.red)
+                                .padding(15)
+                                .font(.system(size: 30.0))
+                        case "blue":
+                            Text("        ")
+                                .background(Color.blue)
+                                .padding(15)
+                                .font(.system(size: 30.0))
+                        default:
+                            Text("        ")
+                                .background(Color.purple)
+                                .padding(15)
+                                .font(.system(size: 30.0))
+                        }
+                    })
+                }
+            }
+            
+            HStack(spacing: 10) {
+                ForEach(nums[3...4], id: \.self) {num in
+                    Button(action: {
+                        selectedAnswer = num;
+                        if (selectedAnswer == questionArr[aNumber]) {
+                            answer.append(true)
+                            aNumber = aNumber + 1;
+                            if (aNumber == questionArr.count) {
+                                gameTurn = "win"
+                            }
+                        } else {
+                            answer.append(false)
+                            gameTurn = "tryAgain"
+                        }
+                    },
+                           label: {
+                        switch(num) {
+                        case "yellow":
+                            Text("        ")
+                                .background(Color.yellow)
+                                .padding(15)
+                                .font(.system(size: 30.0))
+                        default:
+                            Text("        ")
+                                .background(Color.green)
+                                .padding(15)
+                                .font(.system(size: 30.0))
+                        }
+                    })
+                }
             }
         }
+        
     }
     
     func displayQuestion() -> some View {
@@ -149,6 +183,32 @@ struct GameView: View {
             case "purple":
                 Rectangle()
                     .foregroundColor(Color.purple)
+                    .padding(15)
+                    .frame(width: CGFloat(qSize), height: CGFloat(120))
+                    .onAppear {
+                        withAnimation {
+                            qSize += 50;
+                        }
+                    }
+                    .onDisappear {
+                        qSize = 120;
+                    }
+            case "yellow":
+                Rectangle()
+                    .foregroundColor(Color.yellow)
+                    .padding(15)
+                    .frame(width: CGFloat(qSize), height: CGFloat(120))
+                    .onAppear {
+                        withAnimation {
+                            qSize += 50;
+                        }
+                    }
+                    .onDisappear {
+                        qSize = 120;
+                    }
+            case "green":
+                Rectangle()
+                    .foregroundColor(Color.green)
                     .padding(15)
                     .frame(width: CGFloat(qSize), height: CGFloat(120))
                     .onAppear {
@@ -253,8 +313,3 @@ struct GameView: View {
     }
 }
 
-//struct GameView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        GameView();
-//    }
-//}

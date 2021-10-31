@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State var isStarted = false;
-    @State public var difficulty = "easy";
+    @State var isStarted = "none";
+    @State var difficulty = "easy";
     @State var easySelected = true;
     @State var mediumSelected = false;
     @State var hardSelected = false;
@@ -52,7 +52,6 @@ struct ContentView: View {
     
     var body: some View {
         Text("Memory Game")
-            
         .padding(50)
         .border(Color.white)
         .padding(10)
@@ -60,24 +59,44 @@ struct ContentView: View {
         .foregroundColor(Color.white)
         .font(.system(size: 30.0))
         Spacer();
-        if(isStarted) {
-            GameView(difficulty: $difficulty)
-            
+        
+        switch(isStarted) {
+        case "easy":
+            GameView()
             VStack {
                 Button("Quit", action:{
-                    isStarted = false;
+                    isStarted = "none";
+                })
+                .padding(20)
+            }
+            .frame(width: 100, height: 50)
+        case "medium":
+            MediumView();
+            VStack {
+                Button("Quit", action:{
+                    isStarted = "none";
                 })
                 .padding(20)
                 .foregroundColor(Color.red)
             }
-            
-        } else {
+        case "hard":
+            HardView();
             VStack {
-                Text("Select Difficulty");
+                Button("Quit", action:{
+                    isStarted = "none";
+                })
+                .padding(20)
+                .foregroundColor(Color.red)
+            }
+        default:
+            VStack {
+                Text("Select Difficulty")
+                    .padding(5)
+                    .foregroundColor(Color(red: 0, green: 0, blue: 0.5))
                 setDifficulty();
                 Spacer();
                 Button("Start Game", action:{
-                    isStarted = true;
+                    isStarted = difficulty;
                 })
                 .padding(20)
                 .background(Color(red: 0, green: 0, blue: 0.5))
