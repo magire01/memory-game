@@ -8,45 +8,46 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    //DifficultyViewModel
+    @ObservedObject var DifficultyModel = DifficultyViewModel()
+    
     @State var isStarted = "none";
     @State var difficulty = "easy";
-    @State var easySelected = true;
-    @State var mediumSelected = false;
-    @State var hardSelected = false;
     
     func setDifficulty() -> some View {
         return VStack {
             Button("Easy", action: {
-                difficulty = "easy"
-                easySelected = true;
-                mediumSelected = false;
-                hardSelected = false;
-                
+                difficulty = DifficultyModel.EasyMode.difficulty
             })
                 .padding(5)
                 .foregroundColor(Color.white)
-                .background(easySelected ? Color.green : Color.blue)
+                .background((difficulty == DifficultyModel.EasyMode.difficulty) ? Color.green : Color.blue)
                 .frame(width: 200, height: 50)
             Button("Medium", action: {
-                difficulty = "medium"
-                easySelected = false;
-                mediumSelected = true;
-                hardSelected = false;
+                difficulty = DifficultyModel.MediumMode.difficulty
             })
                 .padding(5)
                 .foregroundColor(Color.white)
-                .background(mediumSelected ? Color.green : Color.blue)
+                .background((difficulty == DifficultyModel.MediumMode.difficulty) ? Color.green : Color.blue)
                 .frame(width: 200, height: 50)
             Button("Hard", action: {
-                difficulty = "hard";
-                easySelected = false;
-                mediumSelected = false;
-                hardSelected = true;
+                difficulty = DifficultyModel.HardMode.difficulty
             })
                 .padding(5)
                 .foregroundColor(Color.white)
-                .background(hardSelected ? Color.green : Color.blue)
+                .background((difficulty == DifficultyModel.HardMode.difficulty) ? Color.green : Color.blue)
                 .frame(width: 200, height: 50)
+        }
+    }
+    
+    func QuitGame() -> some View {
+        return VStack {
+            Button("Quit", action:{
+                isStarted = "none";
+            })
+            .padding(20)
+            .foregroundColor(Color.red)
         }
     }
     
@@ -61,33 +62,15 @@ struct ContentView: View {
         Spacer();
         
         switch(isStarted) {
-        case "easy":
-            GameView()
-            VStack {
-                Button("Quit", action:{
-                    isStarted = "none";
-                })
-                .padding(20)
-            }
-            .frame(width: 100, height: 50)
-        case "medium":
+        case DifficultyModel.EasyMode.difficulty:
+            EasyView()
+            QuitGame()
+        case DifficultyModel.MediumMode.difficulty:
             MediumView();
-            VStack {
-                Button("Quit", action:{
-                    isStarted = "none";
-                })
-                .padding(20)
-                .foregroundColor(Color.red)
-            }
-        case "hard":
+            QuitGame()
+        case DifficultyModel.HardMode.difficulty:
             HardView();
-            VStack {
-                Button("Quit", action:{
-                    isStarted = "none";
-                })
-                .padding(20)
-                .foregroundColor(Color.red)
-            }
+            QuitGame()
         default:
             VStack {
                 Text("Select Difficulty")

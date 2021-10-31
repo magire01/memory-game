@@ -7,9 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		591771952727BC5500D12036 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591771942727BC5500D12036 /* GameView.swift */; };
 		59264F7F272E69AA00E3528F /* HardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59264F7E272E69AA00E3528F /* HardView.swift */; };
 		595BB451272EFFE900E5D666 /* DifficultyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595BB450272EFFE900E5D666 /* DifficultyViewModel.swift */; };
+		595BB457272F12B000E5D666 /* EasyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595BB456272F12B000E5D666 /* EasyView.swift */; };
+		595BB459272F1A4D00E5D666 /* GameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595BB458272F1A4D00E5D666 /* GameViewModel.swift */; };
 		5965461F272DE02F0007D021 /* MediumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5965461E272DE02F0007D021 /* MediumView.swift */; };
 		59B8D70B27100B1E00437539 /* MemoryGameApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B8D70A27100B1E00437539 /* MemoryGameApp.swift */; };
 		59B8D70D27100B1E00437539 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B8D70C27100B1E00437539 /* ContentView.swift */; };
@@ -37,9 +38,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		591771942727BC5500D12036 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
 		59264F7E272E69AA00E3528F /* HardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HardView.swift; sourceTree = "<group>"; };
 		595BB450272EFFE900E5D666 /* DifficultyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DifficultyViewModel.swift; sourceTree = "<group>"; };
+		595BB456272F12B000E5D666 /* EasyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EasyView.swift; path = ../../../.Trash/EasyView.swift; sourceTree = "<group>"; };
+		595BB458272F1A4D00E5D666 /* GameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewModel.swift; sourceTree = "<group>"; };
 		5965461E272DE02F0007D021 /* MediumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediumView.swift; sourceTree = "<group>"; };
 		59B8D70727100B1E00437539 /* MemoryGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MemoryGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		59B8D70A27100B1E00437539 /* MemoryGameApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryGameApp.swift; sourceTree = "<group>"; };
@@ -105,10 +107,11 @@
 			children = (
 				59B8D70A27100B1E00437539 /* MemoryGameApp.swift */,
 				59B8D70C27100B1E00437539 /* ContentView.swift */,
-				591771942727BC5500D12036 /* GameView.swift */,
+				595BB456272F12B000E5D666 /* EasyView.swift */,
 				5965461E272DE02F0007D021 /* MediumView.swift */,
 				59264F7E272E69AA00E3528F /* HardView.swift */,
 				595BB450272EFFE900E5D666 /* DifficultyViewModel.swift */,
+				595BB458272F1A4D00E5D666 /* GameViewModel.swift */,
 				59B8D70E27100B2100437539 /* Assets.xcassets */,
 				59B8D71327100B2100437539 /* Info.plist */,
 				59B8D71027100B2100437539 /* Preview Content */,
@@ -272,11 +275,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				59B8D70D27100B1E00437539 /* ContentView.swift in Sources */,
-				591771952727BC5500D12036 /* GameView.swift in Sources */,
 				59264F7F272E69AA00E3528F /* HardView.swift in Sources */,
 				59B8D70B27100B1E00437539 /* MemoryGameApp.swift in Sources */,
 				5965461F272DE02F0007D021 /* MediumView.swift in Sources */,
 				595BB451272EFFE900E5D666 /* DifficultyViewModel.swift in Sources */,
+				595BB457272F12B000E5D666 /* EasyView.swift in Sources */,
+				595BB459272F1A4D00E5D666 /* GameViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

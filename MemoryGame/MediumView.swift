@@ -19,6 +19,9 @@ struct MediumView: View {
     //DifficultyViewModel
     @ObservedObject var Difficulty = DifficultyViewModel();
     
+    //GameViewModel
+    @ObservedObject var GameModel = GameViewModel();
+    
     @State var questionArr = [String]()
     
     @State var answer = [Bool]();
@@ -53,7 +56,7 @@ struct MediumView: View {
     }
     
     func resetGame() {
-        gameTurn = "computer";
+        gameTurn = GameModel.UserTurn.computer;
         isCorrect = Bool();
         qNumber = 0;
         aNumber = 0;
@@ -68,7 +71,7 @@ struct MediumView: View {
     func nextLevel() {
         timeRemaining = numberOfQuestions + 1;
         numberOfQuestions = numberOfQuestions + 1;
-        gameTurn = "computer";
+        gameTurn = GameModel.UserTurn.computer;
         isCorrect = Bool();
         qNumber = 0;
         aNumber = 0;
@@ -87,11 +90,11 @@ struct MediumView: View {
                         answer.append(true)
                         aNumber = aNumber + 1;
                         if (aNumber == questionArr.count) {
-                            gameTurn = "win"
+                            gameTurn = GameModel.UserTurn.win
                         }
                     } else {
                         answer.append(false)
-                        gameTurn = "tryAgain"
+                        gameTurn = GameModel.UserTurn.tryAgain
                     }
                 },
                        label: {
@@ -205,7 +208,7 @@ struct MediumView: View {
                     qNumber = qNumber + 1
                     qDisplay = questionArr[qNumber];
                 } else {
-                    gameTurn = "user";
+                    gameTurn = GameModel.UserTurn.user;
                 }
             }
     }
@@ -243,13 +246,13 @@ struct MediumView: View {
     var body: some View {
         
         switch (gameTurn) {
-        case "user":
+        case GameModel.UserTurn.user:
             displayAnswerSelect();
             Spacer();
-        case "tryAgain":
+        case GameModel.UserTurn.tryAgain:
             displayTryAgain();
             Spacer();
-        case "win":
+        case GameModel.UserTurn.win:
             displayWin();
             Spacer();
         default:
