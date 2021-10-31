@@ -16,5 +16,8 @@ class GameViewModel: ObservableObject {
     @Published var QuestionNumber = 0;
     @Published var AnswerNumber = 0;
     @Published var SelectedAnswer = String();
+    @Published var SelectedQuestion = "black"
+    @Published var QuestionSize = 100
+    @Published var QuestionArr = [String]();
     
 }
