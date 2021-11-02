@@ -1,0 +1,26 @@
+{
+  "DVTSourceControlWorkspaceBlueprintLocationsKey" : {
+    "3DDA7411885C949AF461E1F161820B7AFC64A6D7" : {
+      "DVTSourceControlBranchIdentifierKey" : "master",
+      "DVTSourceControlLocationRevisionKey" : "5b7507b640f08d7bacbe8048044cc2d4937b7013",
+      "DVTSourceControlBranchOptionsKey" : 4,
+      "DVTSourceControlBranchRemoteNameKey" : "origin",
+      "DVTSourceControlWorkspaceBlueprintLocationTypeKey" : "DVTSourceControlBranch"
+    }
+  },
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "3DDA7411885C949AF461E1F161820B7AFC64A6D7",
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "5B96873C-19FF-4CE5-B88C-2B54966DEA0E",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "3DDA7411885C949AF461E1F161820B7AFC64A6D7" : "memory-game\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "MemoryGame",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "MemoryGame.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:magire01\/memory-game.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "3DDA7411885C949AF461E1F161820B7AFC64A6D7"
+    }
+  ]
+}

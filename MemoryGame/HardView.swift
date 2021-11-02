@@ -8,13 +8,6 @@
 import SwiftUI
 
 struct HardView: View {
-    @State var gameTurn = "computer";
-    @State var isCorrect = Bool();
-    @State var qNumber = 0;
-    @State var aNumber = 0;
-    @State var qDisplay = "black"
-    @State var qSize = 120;
-    @State var showQDisplay = false;
     
     //DifficultyViewModel
     @ObservedObject var Difficulty = DifficultyViewModel();
@@ -22,63 +15,30 @@ struct HardView: View {
     //GameViewModel
     @ObservedObject var GameModel = GameViewModel();
     
-    @State var questionArr = [String]()
-    
-    @State var answer = [Bool]();
-    @State var selectedAnswer = String();
-    @State var numberOfQuestions = 2;
-    @State var timeRemaining = 2;
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
-    
     func setQuestion() {
-        if (numberOfQuestions == 2) {
-            for index in 0...numberOfQuestions {
+        if (GameModel.MaxQuestions == 2) {
+            for index in 0...GameModel.MaxQuestions {
                 var randomNumber = Int.random(in: 0..<5)
                 if(index > 0) {
-                    while(questionArr[index - 1] == Difficulty.HardMode.colorOptions[randomNumber]) {
+                    while(GameModel.QuestionArr[index - 1] == Difficulty.HardMode.colorOptions[randomNumber]) {
                         randomNumber = Int.random(in: 0..<5)
                     }
                 }
-                questionArr.append(Difficulty.HardMode.colorOptions[randomNumber])
+                GameModel.QuestionArr.append(Difficulty.HardMode.colorOptions[randomNumber])
             }
         } else {
             var randomNumber = Int.random(in: 0..<5)
             
-            while(questionArr[questionArr.count - 1] == Difficulty.HardMode.colorOptions[randomNumber]) {
+            while(GameModel.QuestionArr[GameModel.QuestionArr.count - 1] == Difficulty.HardMode.colorOptions[randomNumber]) {
                 randomNumber = Int.random(in: 0..<5)
             }
             
-            questionArr.append(Difficulty.HardMode.colorOptions[randomNumber])
+            GameModel.QuestionArr.append(Difficulty.HardMode.colorOptions[randomNumber])
         }
-        print(questionArr)
-        qDisplay = questionArr[0]
-    }
-    
-    func resetGame() {
-        gameTurn = GameModel.TurnOptions.computer;
-        isCorrect = Bool();
-        qNumber = 0;
-        aNumber = 0;
-        timeRemaining = 2
-        numberOfQuestions = 2
-        answer = [Bool]();
-        selectedAnswer = String();
-        questionArr = [String]();
-        qSize = 120;
-    }
-    
-    func nextLevel() {
-        timeRemaining = numberOfQuestions + 1;
-        numberOfQuestions = numberOfQuestions + 1;
-        gameTurn = GameModel.TurnOptions.computer;
-        isCorrect = Bool();
-        qNumber = 0;
-        aNumber = 0;
-        answer = [Bool]();
-        selectedAnswer = String();
-        qSize = 100;
-        print("Level \(numberOfQuestions)")
+        print(GameModel.QuestionArr)
+        GameModel.SelectedQuestion = GameModel.QuestionArr[0]
     }
     
     func displayAnswerSelect() -> some View {
@@ -86,16 +46,14 @@ struct HardView: View {
             HStack(spacing: 10) {
                 ForEach(Difficulty.HardMode.colorOptions[0...2], id: \.self) {num in
                     Button(action: {
-                        selectedAnswer = num;
-                        if (selectedAnswer == questionArr[aNumber]) {
-                            answer.append(true)
-                            aNumber = aNumber + 1;
-                            if (aNumber == questionArr.count) {
-                                gameTurn = GameModel.TurnOptions.win
+                        GameModel.SelectedAnswer = num;
+                        if (GameModel.SelectedAnswer == GameModel.QuestionArr[GameModel.AnswerNumber]) {
+                            GameModel.AnswerNumber = GameModel.AnswerNumber + 1;
+                            if (GameModel.AnswerNumber == GameModel.QuestionArr.count) {
+                                GameModel.Turn = GameModel.TurnOptions.win
                             }
                         } else {
-                            answer.append(false)
-                            gameTurn = GameModel.TurnOptions.tryAgain
+                            GameModel.Turn = GameModel.TurnOptions.tryAgain
                         }
                     },
                            label: {
@@ -123,16 +81,14 @@ struct HardView: View {
             HStack(spacing: 10) {
                 ForEach(Difficulty.HardMode.colorOptions[3...4], id: \.self) {num in
                     Button(action: {
-                        selectedAnswer = num;
-                        if (selectedAnswer == questionArr[aNumber]) {
-                            answer.append(true)
-                            aNumber = aNumber + 1;
-                            if (aNumber == questionArr.count) {
-                                gameTurn = GameModel.TurnOptions.win
+                        GameModel.SelectedAnswer = num;
+                        if (GameModel.SelectedAnswer == GameModel.QuestionArr[GameModel.AnswerNumber]) {
+                            GameModel.AnswerNumber = GameModel.AnswerNumber + 1;
+                            if (GameModel.AnswerNumber == GameModel.QuestionArr.count) {
+                                GameModel.Turn = GameModel.TurnOptions.win
                             }
                         } else {
-                            answer.append(false)
-                            gameTurn = GameModel.TurnOptions.tryAgain
+                            GameModel.Turn = GameModel.TurnOptions.tryAgain
                         }
                     },
                            label: {
@@ -157,84 +113,84 @@ struct HardView: View {
     
     func displayQuestion() -> some View {
         return VStack{
-            switch (qDisplay) {
+            switch (GameModel.SelectedQuestion) {
             case "red":
                 Rectangle()
                     .foregroundColor(Color.red)
                     .padding(15)
-                    .frame(width: CGFloat(qSize), height: CGFloat(120))
+                    .frame(width: CGFloat(GameModel.QuestionSize), height: CGFloat(120))
                     .onAppear {
                         withAnimation {
-                            qSize += 50;
+                            GameModel.QuestionSize += 50;
                         }
                     }
                     .onDisappear {
-                        qSize = 120;
+                        GameModel.QuestionSize = 120;
                     }
             case "blue":
                 Rectangle()
                     .foregroundColor(Color.blue)
                     .padding(15)
-                    .frame(width: CGFloat(qSize), height: CGFloat(120))
+                    .frame(width: CGFloat(GameModel.QuestionSize), height: CGFloat(120))
                     .onAppear {
                         withAnimation {
-                            qSize += 50;
+                            GameModel.QuestionSize += 50;
                         }
                     }
                     .onDisappear {
-                        qSize = 120;
+                        GameModel.QuestionSize = 120;
                     }
             case "purple":
                 Rectangle()
                     .foregroundColor(Color.purple)
                     .padding(15)
-                    .frame(width: CGFloat(qSize), height: CGFloat(120))
+                    .frame(width: CGFloat(GameModel.QuestionSize), height: CGFloat(120))
                     .onAppear {
                         withAnimation {
-                            qSize += 50;
+                            GameModel.QuestionSize += 50;
                         }
                     }
                     .onDisappear {
-                        qSize = 120;
+                        GameModel.QuestionSize = 120;
                     }
             case "yellow":
                 Rectangle()
                     .foregroundColor(Color.yellow)
                     .padding(15)
-                    .frame(width: CGFloat(qSize), height: CGFloat(120))
+                    .frame(width: CGFloat(GameModel.QuestionSize), height: CGFloat(120))
                     .onAppear {
                         withAnimation {
-                            qSize += 50;
+                            GameModel.QuestionSize += 50;
                         }
                     }
                     .onDisappear {
-                        qSize = 120;
+                        GameModel.QuestionSize = 120;
                     }
             case "green":
                 Rectangle()
                     .foregroundColor(Color.green)
                     .padding(15)
-                    .frame(width: CGFloat(qSize), height: CGFloat(120))
+                    .frame(width: CGFloat(GameModel.QuestionSize), height: CGFloat(120))
                     .onAppear {
                         withAnimation {
-                            qSize += 50;
+                            GameModel.QuestionSize += 50;
                         }
                     }
                     .onDisappear {
-                        qSize = 120;
+                        GameModel.QuestionSize = 120;
                     }
             default:
                 Rectangle()
                     .background(Color.white)
                     .padding(15)
-                    .frame(width: CGFloat(qSize), height: CGFloat(120))
+                    .frame(width: CGFloat(GameModel.QuestionSize), height: CGFloat(120))
                     .onAppear {
                         withAnimation {
-                            qSize += 50;
+                            GameModel.QuestionSize += 50;
                         }
                     }
                     .onDisappear {
-                        qSize = 120;
+                        GameModel.QuestionSize = 120;
                     }
             }
         }
@@ -246,35 +202,34 @@ struct HardView: View {
                 setQuestion();
             }
             .onReceive(timer) { _ in
-                if timeRemaining > 0 {
-                    timeRemaining -= 1
-                    qNumber = qNumber + 1
-                    qDisplay = questionArr[qNumber];
+                if GameModel.TimeRemaining > 0 {
+                    GameModel.TimeRemaining -= 1
+                    GameModel.QuestionNumber = GameModel.QuestionNumber + 1
+                    GameModel.SelectedQuestion = GameModel.QuestionArr[GameModel.QuestionNumber];
                 } else {
-                    gameTurn = GameModel.TurnOptions.user;
+                    GameModel.Turn = GameModel.TurnOptions.user;
                 }
             }
     }
     
-    
-    
     func displayTryAgain() -> some View {
         VStack {
             Button("Start Over", action: {
-                resetGame();
+                GameModel.ResetGame();
             })
                 .background(Color(red: 0.8, green: 0, blue: 0))
                 .padding(10)
                 .foregroundColor(Color.white)
                 .font(.system(size: 20))
-        }.background(Color(red: 0.8, green: 0, blue: 0))
-            .frame(width: 150, height: 100)
+        }
+        .background(Color(red: 0.8, green: 0, blue: 0))
+        .frame(width: 150, height: 100)
     }
     
     func displayWin() -> some View {
         VStack {
             Button("Continue", action: {
-                nextLevel();
+                GameModel.NextLevel();
             })
                 .background(Color(red: 0, green: 0.5, blue: 0))
                 .padding(10)
@@ -288,7 +243,7 @@ struct HardView: View {
     
     var body: some View {
         
-        switch (gameTurn) {
+        switch (GameModel.Turn) {
         case GameModel.TurnOptions.user:
             displayAnswerSelect();
             Spacer();
@@ -306,7 +261,7 @@ struct HardView: View {
             
         }
         VStack {
-            Text("Level \(numberOfQuestions - 1)")
+            Text("Level \(GameModel.MaxQuestions - 1)")
                 .padding(10)
                 .background(Color.white)
                 .foregroundColor(Color(red: 0, green: 0.5, blue: 1))

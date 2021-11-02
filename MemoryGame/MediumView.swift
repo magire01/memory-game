@@ -17,7 +17,6 @@ struct MediumView: View {
     
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
-    
     func setQuestion() {
         if (GameModel.MaxQuestions == 2) {
             for index in 0...GameModel.MaxQuestions {

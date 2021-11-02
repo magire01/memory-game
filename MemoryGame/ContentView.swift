@@ -17,27 +17,40 @@ struct ContentView: View {
     
     func setDifficulty() -> some View {
         return VStack {
-            Button("Easy", action: {
+            Button(action: {
                 difficulty = DifficultyModel.EasyMode.difficulty
+            },
+                   label: {
+                Text("Easy")
+                    .padding(10)
+                    .frame(width: 170, height: 35)
+                    .foregroundColor(Color.white)
+                    .background((difficulty == DifficultyModel.EasyMode.difficulty) ? Color.green : Color.blue)
             })
-                .padding(5)
-                .foregroundColor(Color.white)
-                .background((difficulty == DifficultyModel.EasyMode.difficulty) ? Color.green : Color.blue)
-                .frame(width: 200, height: 50)
-            Button("Medium", action: {
+                
+                
+            Button(action: {
                 difficulty = DifficultyModel.MediumMode.difficulty
+            },
+                   label: {
+                Text("Medium")
+                    .padding(10)
+                    .frame(width: 170, height: 35)
+                    .foregroundColor(Color.white)
+                    .background((difficulty == DifficultyModel.MediumMode.difficulty) ? Color.green : Color.blue)
             })
-                .padding(5)
-                .foregroundColor(Color.white)
-                .background((difficulty == DifficultyModel.MediumMode.difficulty) ? Color.green : Color.blue)
-                .frame(width: 200, height: 50)
-            Button("Hard", action: {
+                
+            Button(action: {
                 difficulty = DifficultyModel.HardMode.difficulty
+            },
+                   label: {
+                Text("Hard")
+                    .padding(10)
+                    .frame(width: 170, height: 35)
+                    .foregroundColor(Color.white)
+                    .background((difficulty == DifficultyModel.HardMode.difficulty) ? Color.green : Color.blue)
+                    
             })
-                .padding(5)
-                .foregroundColor(Color.white)
-                .background((difficulty == DifficultyModel.HardMode.difficulty) ? Color.green : Color.blue)
-                .frame(width: 200, height: 50)
         }
     }
     
@@ -74,7 +87,7 @@ struct ContentView: View {
         default:
             VStack {
                 Text("Select Difficulty")
-                    .padding(5)
+                    .padding(15)
                     .foregroundColor(Color(red: 0, green: 0, blue: 0.5))
                 setDifficulty();
                 Spacer();
