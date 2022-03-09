@@ -54,6 +54,13 @@ struct ContentView: View {
         }
     }
     
+    func HighScore() -> some View {
+        return HStack {
+            Text("High Score")
+            Text("\(difficulty)")
+        }
+    }
+    
     func QuitGame() -> some View {
         return VStack {
             Button("Quit", action:{
@@ -100,7 +107,7 @@ struct ContentView: View {
                 .clipShape(Capsule())
                 Spacer();
             }
-            Spacer();
+            HighScore()
         }
         
     }
